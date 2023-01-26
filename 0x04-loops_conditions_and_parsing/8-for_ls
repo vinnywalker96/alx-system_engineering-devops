@@ -6,5 +6,5 @@
 list=$(ls)
 for names in $list;
 do
-    echo "$names"
+    echo "$names" | cut -d '-' -f2
 done
