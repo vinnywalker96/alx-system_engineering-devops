@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-# This script that displays Best School 10 times, but for the 9th iteration, displays Best School and then Hi on a new line.
-
+# This script that displays Best School 10 times
 
 number=1
 while [ $number -lt 11 ]
