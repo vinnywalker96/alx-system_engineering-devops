@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# This script that displays a list of currently running processes.
+
+process=$(ps aux)
+echo "$process"
