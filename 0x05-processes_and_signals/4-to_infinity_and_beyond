@@ -2,7 +2,8 @@
 # This  script that displays To infinity and beyond indefinitely.
 
 
-while [ True ]
+while true
 do
-	echo "To infinity and beyond"
+    echo "To infinity and beyond"
+    sleep 2
 done
