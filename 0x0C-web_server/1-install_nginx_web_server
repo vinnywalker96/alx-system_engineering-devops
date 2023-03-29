@@ -1,1 +1,18 @@
 #!/usr/bin/bash env
+#This script install and configure nginx
+# Install Nginx if it's not already installed
+if ! command -v nginx &> /dev/null
+then
+    echo "Nginx is not installed. Installing now..."
+    sudo apt-get update
+    sudo apt-get install nginx
+fi
+
+# Configure Nginx to listen on port 80
+sudo sed -i 's/listen 80 default_server;/listen 80;/g' /etc/nginx/sites-available/default
+
+# Restart Nginx to apply changes
+sudo systemctl restart nginx
+
+echo 'Hello World!'| sudo tee /var/www/html/index.html > /dev/null
+
