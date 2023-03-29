@@ -1,6 +1,5 @@
 #!/usr/bin/bash env
 #This script install and configure nginx
-# Install Nginx if it's not already installed
 if ! command -v nginx &> /dev/null
 then
     echo "Nginx is not installed. Installing now..."
