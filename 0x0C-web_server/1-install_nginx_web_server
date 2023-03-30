@@ -1,4 +1,4 @@
-#!/usr/bin/bash env
+#!/usr/bin/env bash
 #This script install and configure nginx
 if ! command -v nginx &> /dev/null
 then
