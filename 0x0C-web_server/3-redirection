@@ -1,12 +1,16 @@
 #!/usr/bin/env bash
 # A bash script that installs nginx on an ubuntu machine.
-sudo apt-get update 
-sudo apt-get -y nginx
-sudo ufw enable
-sudo ufw allow 'Nginx HTTP'
+# This scripts also configures the default webpage served to be "Hello World!"
+sudo apt-get update -y
+
+sudo apt-get install nginx -y
+
 echo "Hello World!" | sudo tee /var/www/html/index.html > /dev/null
-sudo service nginx start
-nginx_config="/etc/nginx/nginx.conf/"
-redirect_rule="location /redirectme { return 301 https://www.google.com; }"
-sed -i "/{/a $redirect_rule" $nginx_config
+
+redirect_rule="\\\n\tlocation = /redirect_me {\n\t\t return 301 https://www.youtube.com;\n\t}\n"
+
+sudo cp /etc/nginx/sites-available/default /etc/nginx/sites-available/default.bakup
+
+sudo sed -i "53i $redirect_rule" /etc/nginx/sites-available/default
+
 sudo service nginx restart
