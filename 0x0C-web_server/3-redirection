@@ -8,9 +8,8 @@ sudo apt-get install nginx -y
 echo "Hello World!" | sudo tee /var/www/html/index.html > /dev/null
 
 redirect_rule="\\\n\tlocation = /redirect_me {\n\t\t return 301 https://www.youtube.com;\n\t}\n"
-
-sudo cp /etc/nginx/sites-available/default /etc/nginx/sites-available/default.bakup
-
-sudo sed -i "53i $redirect_rule" /etc/nginx/sites-available/default
+nginx_config="/etc/nginx/sites-available/default"
+sudo cp $nginx_config /etc/nginx/sites-available/default.backup
+sudo sed -i "53i $redirect_rule" $nginx_config
 
 sudo service nginx restart
