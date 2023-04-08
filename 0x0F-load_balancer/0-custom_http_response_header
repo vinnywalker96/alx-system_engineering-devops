@@ -3,9 +3,7 @@
 
 sudo apt-get update
 sudo apt-get install nginx -y
-
-sudo cp /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bak
-
+sudo service start
 sudo sed -i '/http {/a \\tadd_header X-Served-By $hostname;' /etc/nginx/nginx.conf
-
+echo "Hello World!" | sudo tee /var/www/html/index.html > /dev/null
 sudo systemctl restart nginx
