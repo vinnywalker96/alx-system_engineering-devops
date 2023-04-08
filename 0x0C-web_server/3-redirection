@@ -1,9 +1,9 @@
 #!/bin/bash
 # Install Nginx
-sudoapt-get update
+sudo apt-get update
 sudo apt-get install nginx -y
 echo "Hello World!" | sudo tee  /var/www/html/index.html > /dev/null
-rm /etc/nginx/sites-enabled/default
+sudo rm /etc/nginx/sites-enabled/default
 cat <<EOF > /etc/nginx/sites-available/redirect_me.conf
 server {
   listen 80;
