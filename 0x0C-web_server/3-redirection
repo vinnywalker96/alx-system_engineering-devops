@@ -1,5 +1,5 @@
-#!/bin/bash
-# Install Nginx
+#!/usr/bin/env bash
+# Install and configured the server
 sudo apt-get update
 sudo apt-get install nginx -y
 echo "Hello World!" | sudo tee  /var/www/html/index.html > /dev/null
@@ -8,7 +8,7 @@ cat <<EOF > /etc/nginx/sites-available/redirect_me.conf
 server {
   listen 80;
   server_name _;
-  return 301 http://www.redirected.com/;
+  return 301 http://www.youtube.com/;
 }
 EOF
 sudo ln -s /etc/nginx/sites-available/redirect_me.conf /etc/nginx/sites-enabled/
