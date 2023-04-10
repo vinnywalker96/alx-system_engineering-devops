@@ -4,6 +4,9 @@ sudo apt-get install -y --no-install-recommends software-properties-common
 sudo add-apt-repository -y ppa:vbernat/haproxy-2.7
 sudo apt-get update -y
 sudo apt-get install -y haproxy=2.7.*
+ACTIVATION=\
+"ENABLED=1"
+sudo bash -c "echo -e '$ACTIVATION' > /etc/default/haproxy"
 CONFIG=\
 "defaults
     mode http
@@ -18,8 +21,8 @@ frontend localnodes
 
 backend nodes
     balance roundrobin
-    server node1 18.234.80.132:80 check
-    server node2 100.25.160.25:80 check
+    server 105775-web-01 18.234.80.132:80 check
+    server 105775-web-02 100.25.160.25:80 check
 "
 sudo bash -c "echo -e '$CONFIG' > /etc/haproxy/haproxy.cfg"
 sudo service haproxy restart
