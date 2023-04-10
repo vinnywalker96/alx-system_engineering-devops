@@ -1,9 +1,33 @@
 #!/usr/bin/env bash
 # Configure Nginx so that its HTTP response contains a custom header (on web-01 and web-02)
-
+#!/usr/bin/env bash
+# Installs, configures, and starts the server
 sudo apt-get update
-sudo apt-get install nginx -y
-sudo service start
+sudo apt-get -y install nginx
+sudo ufw allow 'Nginx HTTP'
+echo 'Hello World!' | sudo tee /var/www/html/index.html > /dev/null
+echo "Ceci n'est pas une page" | sudo tee /var/www/html/404.html > /dev/null
+sudo service nginx start
+CONFIG=\
+"server {
+        listen 80 default_server;
+        listen [::]:80 default_server;
+        root /var/www/html;
+        index index.html index.htm index.nginx-debian.html;
+        server_name _;
+        location / {
+                try_files \$uri \$uri/ =404;
+        }
+        if (\$request_filename ~ redirect_me){
+                rewrite ^ https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;
+        }
+        error_page 404 /404.html;
+        location = /404.html{
+             internal;
+         }
+}"
+
+sudo bash -c "echo -e '$CONFIG' > /etc/nginx/sites-enabled/default"
 sudo sed -i '/http {/a \\tadd_header X-Served-By $hostname;' /etc/nginx/nginx.conf
-echo "Hello World!" | sudo tee /var/www/html/index.html > /dev/null
-sudo systemctl restart nginx
+sudo service nginx restart
+
