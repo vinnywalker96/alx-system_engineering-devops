@@ -16,4 +16,4 @@ backend nodes
     server 105775-web-02 100.25.160.25:80 check
 "
 sudo bash -c "echo -e '$CONFIG' > /etc/haproxy/haproxy.cfg"
-sudo service haproxy restart
+sudo systemctl restart haproxy
