@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
 # configure haproxy load-balancing server
-sudo apt-get update -y
-sudo apt-get install -y haproxy=2.7.*
+sudo apt-get update
+sudo apt-get install --no-install-recommends software-properties-common -y
+sudo add-apt-repository ppa:vbernat/haproxy-2.7 -y
+sudo apt-get update
+sudo apt-get install haproxy=2.7.* -y
+
 CONFIG=\
 "
 frontend http-in
