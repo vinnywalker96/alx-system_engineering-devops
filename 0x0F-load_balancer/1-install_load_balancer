@@ -1,23 +1,21 @@
 #!/usr/bin/env bash
-# configure haproxy load-balancing server
-sudo apt-get update
-sudo apt-get install --no-install-recommends software-properties-common -y
-sudo add-apt-repository ppa:vbernat/haproxy-2.7 -y
-sudo apt-get update
-sudo apt-get install haproxy=2.7.* -y
+# configures a new HAproxy as a load balancer
 
-CONFIG=\
-"
-frontend http-in
-    mode http
-    bind *:80
-    default_backend nodes
+# Install HAproxy on a server
+apt-get -y update
+apt-get -y install haproxy=2.7.\*
+
+# Configure haproxy configuration file to distribute requests using a roundrobin algorithm
+echo '
+frontend vestec.tech
+        bind 0:80
+        default_backend nodes
 
 backend nodes
-    mode http
-    balance roundrobin
-    server 105775-web-01 18.234.80.132:80 check
-    server 105775-web-02 100.25.160.25:80 check
-"
-sudo bash -c "echo -e '$CONFIG' > /etc/haproxy/haproxy.cfg"
-sudo systemctl restart haproxy
+        balance roundrobin
+        server 105775-web-01 18.234.80.132:80
+        server 105775-web-02 100.25.160.25:80
+' >> /etc/haproxy/haproxy.cfg
+
+# Restart HAproxy service
+service haproxy restart
