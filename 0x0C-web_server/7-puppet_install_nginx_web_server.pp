@@ -1,24 +1,47 @@
-# Script to install nginx using puppet
+# Installs, configures, and starts the server
+class nginx_server {
+  package { 'nginx':
+    ensure => installed,
+  }
 
-package {'nginx':
-  ensure => 'present',
+  service { 'nginx':
+    ensure => running,
+    enable => true,
+    require => Package['nginx'],
+  }
+
+  file { '/var/www/html/index.html':
+    content => 'Hello World!\n',
+    require => Package['nginx'],
+  }
+
+  file { '/etc/nginx/sites-enabled/default':
+    content => "\
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    root /var/www/html;
+    index index.html index.htm index.nginx-debian.html;
+    server_name _;
+
+    location / {
+        try_files \$uri \$uri/ =404;
+    }
+
+    if (\$request_filename ~ redirect_me) {
+        rewrite ^ https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;
+    }
+}",
+    require => Package['nginx'],
+    notify => Service['nginx'],
+  }
+
+  exec { 'ufw_allow_nginx':
+    command => '/usr/sbin/ufw allow "Nginx HTTP"',
+    unless => '/usr/sbin/ufw status | grep "Nginx HTTP" | grep "ALLOW"',
+    require => Package['nginx'],
+  }
 }
 
-exec {'install':
-  command  => 'sudo apt-get update ; sudo apt-get -y install nginx',
-  provider => shell,
-}
+include nginx_server
 
-exec {'Hello World!':
-  command  => 'echo "Hello World!" | sudo dd status=none of=/var/www/html/index.html',
-  provider => shell,
-}
-
-exec {'sudo sed -i "s/listen 80 default_server;/listen 80 default_server;\\n\\tlocation \/redirect_me {\\n\\t\\treturn 301 https:\/\/https://www.youtube.com/watch?v=QH2-TGUlwu4\/;\\n\\t}/" /etc/nginx/sites-available/default':
-  provider => shell,
-}
-
-exec {'run':
-  command  => 'sudo service nginx restart',
-  provider => shell,
-}
