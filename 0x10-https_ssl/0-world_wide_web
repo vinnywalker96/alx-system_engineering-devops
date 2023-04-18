@@ -5,7 +5,8 @@ function display_info() {
     local domain=$2
     local record=$(dig +short $subdomain.$domain | head -n1)
     local record_type=$(dig +short $subdomain.$domain | awk 'NR==1{print $4}')
-    echo "The subdomain $subdomain is a $record_type record and points to $record"
+    echo "The subdomain $subdomain is a A record and points to $record"
+
 }
 
 if [ $# -eq 1 ]; then
