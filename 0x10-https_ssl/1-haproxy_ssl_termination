@@ -1,0 +1,11 @@
+frontend vestec.tech
+	mode http
+        bind 0:443 ssl crt /etc/ssl/certs/*
+        bind 0:80
+        default_backend nodes
+
+backend nodes
+	mode http
+        balance roundrobin
+        server 105775-web-01 54.234.73.142:80
+        server 105775-web-02 54.160.92.159:80
