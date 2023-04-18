@@ -1,3 +1,6 @@
+#!/usr/bin/env bash
+# configure certbot ssl/tls with haproxy
+echo ' 
 frontend vestec.tech
 	mode http
         bind *:443 ssl crt /etc/ssl/certs/*
@@ -9,3 +12,5 @@ backend nodes
         balance roundrobin
         server 105775-web-01 54.234.73.142:80
         server 105775-web-02 54.160.92.159:80
+' >>/etc/haproxy/haproxy.cfg
+service haproxy restart
