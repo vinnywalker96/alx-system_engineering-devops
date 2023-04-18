@@ -25,7 +25,7 @@ frontend www-http
     default_backend www-backend
 
 frontend www-https
-    bind   54.162.0.152:443 ssl crt /etc/haproxy/certs/www.vestec.pem
+    bind   54.162.0.152:443 ssl crt /etc/haproxy/certs/www.bdbnb.site.pem
     reqadd X-Forwarded-Proto:\ https
     acl    letsencrypt-acl path_beg /.well-known/acme-challenge/
     use_backend letsencrypt-backend if letsencrypt-acl
