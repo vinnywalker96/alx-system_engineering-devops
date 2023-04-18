@@ -1,16 +1,40 @@
-#!/usr/bin/env bash
-# configure certbot ssl/tls with haproxy
-echo ' 
-frontend vestec.tech
-	mode http
-        bind *:443 ssl crt /etc/ssl/certs/*
-        bind *:80
-        default_backend nodes
+global
+    log     /dev/log local0
+    maxconn 2048
+    user    haproxy
+    group   haproxy
+    tune.ssl.default-dh-param 2048
 
-backend nodes
-	mode http
-        balance roundrobin
-        server 105775-web-01 54.234.73.142:80
-        server 105775-web-02 54.160.92.159:80
-' >>/etc/haproxy/haproxy.cfg
-service haproxy restart
+defaults
+    log     global
+    mode    http
+    option  httplog
+    option  dontlognull
+    retries 3
+    option  redispatch
+    timeout connect  5000
+    timeout client  10000
+    timeout server  10000
+    option  forwardfor
+    option  http-server-close
+
+frontend www-http
+    bind   54.162.0.152:80
+    reqadd X-Forwarded-Proto:\ http
+    default_backend www-backend
+
+frontend www-https
+    bind   54.162.0.152:443 ssl crt /etc/haproxy/certs/www.vestec.pem
+    reqadd X-Forwarded-Proto:\ https
+    acl    letsencrypt-acl path_beg /.well-known/acme-challenge/
+    use_backend letsencrypt-backend if letsencrypt-acl
+    default_backend www-backend
+
+backend www-backend
+    balance  roundrobin
+    redirect scheme https if !{ ssl_fc }
+    server 105775-web-01 54.234.73.142:80 check
+    server 105775-web-02 54.160.92.159:80 check
+
+backend letsencrypt-backend
+    server letsencrypt 127.0.0.1:54321
