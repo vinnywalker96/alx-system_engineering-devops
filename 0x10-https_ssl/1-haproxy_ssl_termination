@@ -1,5 +1,4 @@
-
-bal
+global
     log     /dev/log local0
     maxconn 2048
     user    haproxy
