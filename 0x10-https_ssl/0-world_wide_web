@@ -1,4 +1,25 @@
 #!/usr/bin/env bash
 # display information for the specified subdomain
 
+function check_subdomain {
+    local domain=$1
+    local subdomain=$2
+
+    local record_type=$(dig +noall +answer $subdomain.$domain | awk '{print $4}')
+    local destination=$(dig +noall +answer $subdomain.$domain | awk '{print $5}')
+
+    echo "The subdomain $subdomain is a $record_type record and points to $destination"
+}
+
+domain=$1
+subdomain=$2
+
+if [ -z "$subdomain" ]; then
+    check_subdomain $domain www
+    check_subdomain $domain lb-01
+    check_subdomain $domain web-01
+    check_subdomain $domain web-02
+else
+    check_subdomain $domain $subdomain
+fi
 
