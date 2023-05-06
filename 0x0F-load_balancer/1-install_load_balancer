@@ -2,8 +2,8 @@
 # configures a new HAproxy as a load balancer
 
 # Install HAproxy on a server
-apt-get -y update
-apt-get -y install haproxy=1.6.\*
+sudo apt-get -y update
+sudo apt-get -y install haproxy=1.6.\*
 
 # Configure haproxy configuration file to distribute requests using a roundrobin algorithm
 echo '
@@ -13,9 +13,9 @@ frontend vestec.tech
 
 backend nodes
         balance roundrobin
-        server 105775-web-01 18.234.80.132:80
-        server 105775-web-02 100.25.160.25:80
+        server web-01 54.144.46.42:80
+        server web-02 100.25.194.141:80
 ' >> /etc/haproxy/haproxy.cfg
 
 # Restart HAproxy service
-service haproxy restart
+sudo service haproxy restart
