@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-whoami $1
+sudo -u $1 whoami
