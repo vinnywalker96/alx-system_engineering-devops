@@ -29,7 +29,7 @@ def get_employee_todo_progress(employee_id):
     print("Employee {} is done with tasks({}/{}):".
           format(EMPLOYEE_NAME, NUMBER_OF_DONE_TASKS,
                  TOTAL_NUMBER_OF_TASKS))
-    print("\t{}: {} completed tasks out of {}".
+    print("\t {}: {} completed tasks out of {}".
           format(EMPLOYEE_NAME, NUMBER_OF_DONE_TASKS,
                  TOTAL_NUMBER_OF_TASKS))
 
