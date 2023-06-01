@@ -40,4 +40,5 @@ def get_employee_todo_progress(employee_id):
 
 
 # Example usage: get TODO list progress for employee with ID 1
-get_employee_todo_progress(sys.argv[1])
+if __name__ == "__main__":
+    get_employee_todo_progress(sys.argv[1])
