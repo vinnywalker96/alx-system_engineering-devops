@@ -27,11 +27,11 @@ def get_employee_todo_progress(employee_id):
 
     # Display employee TODO list progress
     print("Employee {} is done with tasks({}/{}):".
-          format(EMPLOYEE_NAME, NUMBER_OF_DONE_TASKS, 
-          TOTAL_NUMBER_OF_TASKS))
+          format(EMPLOYEE_NAME, NUMBER_OF_DONE_TASKS,
+                 TOTAL_NUMBER_OF_TASKS))
     print("\t{}: {} completed tasks out of {}".
           format(EMPLOYEE_NAME, NUMBER_OF_DONE_TASKS,
-          TOTAL_NUMBER_OF_TASKS))
+                 TOTAL_NUMBER_OF_TASKS))
 
     # Display the titles of completed tasks
     print("Completed tasks:")
