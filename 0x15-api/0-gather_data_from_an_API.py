@@ -36,7 +36,7 @@ def get_employee_todo_progress(employee_id):
     # Display the titles of completed tasks
     print("Completed tasks:")
     for task in completed_tasks:
-        print(f"\t{task['title']}")
+        print(f"\t {task['title']}")
 
 
 # Example usage: get TODO list progress for employee with ID 1
