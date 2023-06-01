@@ -4,12 +4,16 @@ import sys
 
 
 def get_employee_todo_progress(employee_id):
+    """returns employee todo
+    Args:
+        employee_id (int)
+    """
     base_url = 'https://jsonplaceholder.typicode.com'
 
     # Retrieve employee information
     employee_response = requests.get(f'{base_url}/users/{employee_id}')
     employee_data = employee_response.json()
-    employee_name = employee_data['name']
+    EMPLOYEE_NAME = employee_data['name']
 
     # Retrieve employee's TODO list
     todo_response = requests.get(f'{base_url}/todos?userId={employee_id}')
@@ -17,14 +21,14 @@ def get_employee_todo_progress(employee_id):
 
     # Count the number of completed tasks
     completed_tasks = [task for task in todo_data if task['completed']]
-    number_of_done_tasks = len(completed_tasks)
-    total_number_of_tasks = len(todo_data)
+    NUMBER_OF_DONE_TASKS = len(completed_tasks)
+    TOTAL_NUMBER_OF_TASKS = len(todo_data)
 
     # Display employee TODO list progress
-    print(f"Employee {employee_name} is done\
-           with tasks({number_of_done_tasks}/{total_number_of_tasks}):")
-    print(f"\t{employee_name}: {number_of_done_tasks}\
-            completed tasks out of {total_number_of_tasks}")
+    print(f"Employee {EMPLOYEE_NAME} is done\
+           with tasks({NUMBER_OF_DONE_TASKS}/{TOTAL_NUMBER_OF_TASKS}):")
+    print(f"\t{EMPLOYEE_NAME}: {NUMBER_OF_DONE_TASKS}\
+            completed tasks out of {TOTAL_NUMBER_OF_TASKS}")
 
     # Display the titles of completed tasks
     print("Completed tasks:")
