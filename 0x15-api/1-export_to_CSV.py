@@ -21,15 +21,16 @@ def export_employee_todo_to_csv(employee_id):
 
     # Export data to CSV
     filename = f'{employee_id}.csv'
-    with open(filename, 'w', encoding='utf-8') as csvfile:
+    with open(filename, 'w', encoding='utf-8', newline='') as csvfile:
         writer = csv.writer(csvfile)
         for todo in todos:
-            data = (
-                todo['userId'],
-                employee_username,
-                todo['completed'],
-                todo['title']
-            )
+            if str(todo['userId']) == employee_id:
+                data = [
+                    str(todo['userId']),
+                    employee_username,
+                    str(todo['completed']),
+                    todo['title']
+                ]
             writer.writerow(data)
 
     print(f"Data exported to {filename} successfully.")
