@@ -1,38 +1,35 @@
 #!/usr/bin/python3
-"""Import libraries"""
 import requests
+import csv
 import sys
 
 
-def get_employee_todo_progress(employee_id):
-    """returns employee todo
-    Args:
-        employee_id (int)
-    """
-    base_url = 'https://jsonplaceholder.typicode.com'
+def export_employee_todo_to_csv(employee_id):
+    # Fetch employee details
+    employee_url = f'https://jsonplaceholder.typicode.com/users/{employee_id}'
+    response = requests.get(employee_url)
+    employee_data = response.json()
+    employee_username = employee_data['username']
 
-    # Retrieve employee information
-    employee_response = requests.get(f'{base_url}/users/{employee_id}')
-    employee_data = employee_response.json()
-    EMPLOYEE_NAME = employee_data['name']
+    # Fetch employee's TODO list
+    todos_url = f'https://jsonplaceholder.typicode.com/todos?userId={employee_id}'
+    response = requests.get(todos_url)
+    todos = response.json()
 
-    # Retrieve employee's TODO list
-    todo_response = requests.get(f'{base_url}/todos?userId={employee_id}')
-    todo_data = todo_response.json()
+    # Export data to CSV
+    filename = f'{employee_id}.csv'
+    with open(filename, 'w', encoding='utf-8') as csvfile:
+        writer = csv.writer(csvfile)
+        for todo in todos:
+            data = "{},{},{},{}".format(todo['userId'],
+                employee_username, todo['completed'],
+                    todo['title'])
+            writer.writerow(data)
 
-    # Count the number of completed tasks
-    completed_tasks = [task for task in todo_data if task['completed']]
-    NUMBER_OF_DONE_TASKS = len(completed_tasks)
-    TOTAL_NUMBER_OF_TASKS = len(todo_data)
-
-    # Display employee TODO list progress
-    print("Employee {} is done with tasks({}/{}):".
-          format(EMPLOYEE_NAME, NUMBER_OF_DONE_TASKS,
-                 TOTAL_NUMBER_OF_TASKS))
-    for task in completed_tasks:
-        print("\t {}".format(task['title']))
+    print(f"Data exported to {filename} successfully.")
 
 
-# Example usage: get TODO list progress for employee with ID 1
+# Example usage
 if __name__ == "__main__":
-    get_employee_todo_progress(sys.argv[1])
+    export_employee_todo_to_csv(sys.argv[1])
+

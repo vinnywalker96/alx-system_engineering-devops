@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 import requests
 import csv
+import sys
+
 
 def export_employee_todo_to_csv(employee_id):
     # Fetch employee details
@@ -16,18 +18,18 @@ def export_employee_todo_to_csv(employee_id):
 
     # Export data to CSV
     filename = f'{employee_id}.csv'
-    with open(filename, 'w', newline='') as csvfile:
+    with open(filename, 'w', encoding='utf-8') as csvfile:
         writer = csv.writer(csvfile)
         for todo in todos:
-            user_id = todo['userId']
-            task_completed = todo['completed']
-            task_title = todo['title']
-            writer.writerow(user_id, employee_username, task_completed, task_title])
+            data = "{},{},{},{}".format(todo['userId'],
+                employee_username, todo['completed'],
+                    todo['title'])
+            writer.writerow(data)
 
     print(f"Data exported to {filename} successfully.")
 
 
 # Example usage
-employee_id = 2  # Enter the employee ID here
-export_employee_todo_to_csv(employee_id)
+if __name__ == "__main__":
+    export_employee_todo_to_csv(sys.argv[1])
 
