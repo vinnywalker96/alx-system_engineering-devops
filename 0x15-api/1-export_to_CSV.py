@@ -14,9 +14,9 @@ def export_employee_todo_to_csv(employee_id):
     employee_username = employee_data['username']
 
     # Fetch employee's TODO list
-    url = 'https://jsonplaceholder.typicode.com/todos?userId={}'.
-    format(employee_id)
-    response = requests.get(url)
+    url = 'https://jsonplaceholder.typicode.com'
+    base_url = f'{url}/todos?userId={employee_id}'
+    response = requests.get(base_url)
     todos = response.json()
 
     # Export data to CSV
