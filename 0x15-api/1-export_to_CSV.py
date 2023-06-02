@@ -1,10 +1,12 @@
 #!/usr/bin/python3
+"""import libraries"""
 import requests
 import csv
 import sys
 
 
 def export_employee_todo_to_csv(employee_id):
+    """Export to csv"""
     # Fetch employee details
     employee_url = f'https://jsonplaceholder.typicode.com/users/{employee_id}'
     response = requests.get(employee_url)
