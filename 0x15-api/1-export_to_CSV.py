@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """import libraries"""
-import requests
 import csv
+import requests
 import sys
 
 
