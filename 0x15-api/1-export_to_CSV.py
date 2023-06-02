@@ -31,6 +31,7 @@ def export_employee_todo_to_csv(employee_id):
                     str(todo['completed']),
                     todo['title']
                 ]
+                print(data)
             writer.writerow(data)
 
     print(f"Data exported to {filename} successfully.")
