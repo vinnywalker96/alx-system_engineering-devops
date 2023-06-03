@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 """import modules"""
+import json
 import requests
 import sys
-import json
 
 
 def export_to_json(employee_id):
