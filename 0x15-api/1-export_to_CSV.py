@@ -18,7 +18,6 @@ def export_employee_todo_to_csv(employee_id):
     base_url = f'{url}/todos?userId={employee_id}'
     response = requests.get(base_url)
     todos = response.json()
-
     # Export data to CSV
     filename = f'{employee_id}.csv'
     with open(filename, 'w', encoding='utf-8', newline='') as csvfile:
@@ -31,12 +30,9 @@ def export_employee_todo_to_csv(employee_id):
                     str(todo['completed']),
                     todo['title']
                 ]
-                print(data)
+                
             writer.writerow(data)
 
-    print(f"Data exported to {filename} successfully.")
 
-
-# Example usage
 if __name__ == "__main__":
     export_employee_todo_to_csv(sys.argv[1])
