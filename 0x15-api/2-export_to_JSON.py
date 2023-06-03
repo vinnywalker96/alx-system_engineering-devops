@@ -29,6 +29,7 @@ def export_to_json(employee_id):
 
     with open(filename, 'w', encoding='utf-8') as f:
         json.dump(data, f)
+    return data
 
 
 if __name__ == "__main__":
