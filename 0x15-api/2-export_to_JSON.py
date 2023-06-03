@@ -15,21 +15,13 @@ def export_to_json(employee_id):
     todos = res.json()
     employee_task = []
     filename = f'{employee_id}.json'
-    for todo in todos:
-        if str(todo['userId']) == employee_id:
-            task = {
-                "task": todo['title'],
-                "completed": todo['completed'],
-                "username": employee_name
-            }
-            employee_task.append(task)
-    data = {
-        employee_id: employee_task
-    }
-
     with open(filename, 'w', encoding='utf-8') as f:
-        json.dump(data, f)
-    return data
+        json.dump({employee_id: [{
+                  "task": todo.get("title"),
+                  "completed": todo.get("competed"),
+                  "username": employee_name
+                  }
+                  for todo in todos]}, f)
 
 
 if __name__ == "__main__":
