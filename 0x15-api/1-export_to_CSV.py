@@ -26,5 +26,7 @@ def export_employee_todo_to_csv(employee_id):
             [employee_id, employee_username,
                 todo.get("completed"), todo.get("title")]
              ) for todo in todos]
+
+
 if __name__ == "__main__":
     export_employee_todo_to_csv(sys.argv[1])
