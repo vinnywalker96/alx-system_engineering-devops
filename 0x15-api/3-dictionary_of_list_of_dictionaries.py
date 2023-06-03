@@ -13,7 +13,7 @@ def get_all_task():
     todos = res.json()
     filename = 'todo_all_employees.json'
     with open(filename, 'w', encoding='utf-8') as f:
-        json.dump({user.get('id'): [{"username": user.get("username"),
+        json.dump({user.get('userId'): [{"username": user.get("username"),
                   "task": todo.get("title"),
                   "completed": todo.get("completed")
                   } for todo in todos]
