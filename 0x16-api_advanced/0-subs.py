@@ -3,7 +3,7 @@
 import requests
 
 
-def get_subreddit_subscribers(subreddit):
+def number_of_subscribers(subreddit):
     """_queries the Reddit API and returns the number of subscribers
 
     Args:
@@ -15,7 +15,8 @@ def get_subreddit_subscribers(subreddit):
     url = f"https://www.reddit.com/r/{subreddit}/about.json"
     headers = {'User-Agent': 'Custom User Agent'}
     response = requests.get(url, headers=headers)
-    if response.status_code == 404:
-        return 0
-    results = response.json().get("data")
-    return results.get("subscribers")
+    if response.status_code == 200:
+        data = response.json()
+        subscibers = data['data']['subscribers']
+        return subscibers
+    return 0
