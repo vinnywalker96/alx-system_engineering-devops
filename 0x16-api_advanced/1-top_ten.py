@@ -1,20 +1,24 @@
 #!/usr/bin/python3
 """Import Libraries"""
 import requests
-import sys
+
+
+import requests
 
 
 def top_ten(subreddit):
-    """prints the titles of the first 10 hot posts listed
+    # Make a GET request to the Reddit API
+    response = requests.get(
+        f"https://www.reddit.com/r/{subreddit}/hot.json", headers={"User-Agent": "Mozilla/5.0"})
 
-    Args:
-        subreddit (_type_): _description_
-    """
-    url = f"https://www.reddit.com/r/{subreddit}/about.json"
-    headers = {'User-Agent': 'Custom User Agent'}
-    response = requests.get(url, headers=headers)
+    # Check if the response is valid
     if response.status_code == 200:
+        # Extract the JSON data from the response
         data = response.json()
-        title_post = data['data']
-        return title_post
+
+        # Iterate over the first 10 posts
+        for i in range(10):
+            # Extract the title of each post
+            title = data['data']['children'][i]['data']['title']
+            return title
     return 0
