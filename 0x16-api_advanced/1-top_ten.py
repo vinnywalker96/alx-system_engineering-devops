@@ -3,9 +3,6 @@
 import requests
 
 
-import requests
-
-
 def top_ten(subreddit):
     # Make a GET request to the Reddit API
     response = requests.get(
